@@ -170,6 +170,7 @@ module.exports = (pool) => {
     const { name, member } = req.body;
     let id = req.params.projectid;
 
+    console.log(req.body.member);
     let sql = `UPDATE projects SET name = '${name}' WHERE projectid = ${req.params.projectid}`;
     pool.query(sql, (err) => {
       pool.query(`DELETE FROM members WHERE projectid = ${req.params.projectid}`, (err) => {
@@ -549,7 +550,7 @@ module.exports = (pool) => {
   // ============================= Router Members Delete =============================
   router.get('/deletemember/:projectid/:id', (req, res) => {
     let sql = `DELETE FROM members WHERE id =${req.params.id}`
-    pool.query(sql, (err) => 
+    pool.query(sql, (err) => {
       if (err) { console.log("Error Delete", err) }
       res.redirect(`/projects/members/${req.params.projectid}`);
     });
