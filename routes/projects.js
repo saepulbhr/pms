@@ -128,7 +128,7 @@ module.exports = (pool) => {
       let view = `SELECT projectid FROM projects order by projectid desc limit 1`;
       pool.query(view, (err, row) => {
         let temp = []
-        let idProject = row.rows[0].projectid;
+        let idProject = row.rows[0];
 
         if (typeof req.body.member == 'string') {
           temp.push(`(${req.body.member}, ${idProject})`)
@@ -139,7 +139,8 @@ module.exports = (pool) => {
         }
 
         let sqlsave = `INSERT INTO public.members (userid, role, projectid) values ${temp.join(',')}`;
-        pool.query(sqlsave, () => {
+        pool.query(sqlsave, (err) => {
+          if (err) { console.error("Error", err) }
           res.redirect('/projects')
         })
       })
@@ -148,16 +149,17 @@ module.exports = (pool) => {
 
   // ============================= Router Edit /projects =============================
   router.get('/edit/:projectid', auth, (req, res) => {
-    let sql = `SELECT members.userid, projects.name, projects.projectid FROM members LEFT JOIN projects ON projects.projectid = members.projectid WHERE projects.projectid = ${req.params.projectid}`;
-    pool.query(sql, (err, data) => {
-      pool.query(`SELECT * FROM users`, (err, user) => {
-        res.render('project/edit', {
-          name: data.rows[0].name,
-          projectid: data.rows[0].projectid,
-          members: data.rows.map(item => item.userid),
-          users: user.rows,
-          isAdmin: req.session.user,
-          path
+    pool.query(`SELECT members.userid, projects.projectid FROM members LEFT JOIN projects ON projects.projectid = members.projectid LEFT JOIN users ON members.userid = users.userid WHERE projects.projectid = ${req.params.projectid}`, (err, data) => {
+      pool.query(`select projects.name, projects.projectid from projects left join members on members.projectid = projects.projectid where projects.projectid =${req.params.projectid}`, (err, nmmember) => {
+        pool.query(`SELECT * FROM users`, (err, user) => {
+          res.render('project/edit', {
+            name: nmmember.rows[0].name,
+            projectid: nmmember.rows[0].projectid,
+            members: data.rows.map(item => item.userid),
+            users: user.rows,
+            isAdmin: req.session.user,
+            path
+          })
         })
       })
     })
@@ -168,7 +170,6 @@ module.exports = (pool) => {
     const { name, member } = req.body;
     let id = req.params.projectid;
 
-    console.log(req.body.member);
     let sql = `UPDATE projects SET name = '${name}' WHERE projectid = ${req.params.projectid}`;
     pool.query(sql, (err) => {
       pool.query(`DELETE FROM members WHERE projectid = ${req.params.projectid}`, (err) => {
@@ -344,24 +345,7 @@ module.exports = (pool) => {
                                   startdate = '${startdate}',
                                   duedate = '${duedate}',
                                   assignee = ${assignee} WHERE issueid = ${req.params.issueid}`;
-    } 
-    // else if(filename.trim() == ''){
-    //   sql = `UPDATE issues SET tracker = '${tracker}',
-    //                               subject = '${subject}',
-    //                               description = '${description}',
-    //                               status = '${status}',
-    //                               priority = '${priority}',
-    //                               estimatedtime = '${estimatedtime}',
-    //                               done = '${progres}',
-    //                               updateddate =  now(),
-    //                               parenttask = ${parenttask},
-    //                               spenttime = ${spenttime},   
-    //                               targetversion = '${tergetversion}',
-    //                               author = '${req.session.user.userid}',
-    //                               startdate = '${startdate}',
-    //                               duedate = '${duedate}',
-    //                               assignee = ${assignee} WHERE issueid = ${req.params.issueid}`;
-    // }
+    }
     else {
       sql = `UPDATE issues SET tracker = '${tracker}',
                                    subject = '${subject}',
@@ -380,7 +364,6 @@ module.exports = (pool) => {
                                    duedate = '${duedate}',
                                    assignee = ${assignee} WHERE issueid = ${req.params.issueid}`;
     }
-    console.log(sql)
     if (req.files) {
       upload.mv(pathnode.join(__dirname, `../public/images/${filename}`)), function (err) {
         if (err) console.log(err)
@@ -461,7 +444,6 @@ module.exports = (pool) => {
     const { cid, memberid, cname, name, cposition, membername } = req.query;
     let temp = []
     const pathside = "member";
-    console.log(req.url)
     const url = (req.url == `/members/${req.params.projectid}`) ? `/members/${req.params.projectid}/?page=1` : req.url
     let page = req.query.page || 1;
     let limit = 2;
@@ -567,8 +549,7 @@ module.exports = (pool) => {
   // ============================= Router Members Delete =============================
   router.get('/deletemember/:projectid/:id', (req, res) => {
     let sql = `DELETE FROM members WHERE id =${req.params.id}`
-    pool.query(sql, (err) => {
-      console.log(sql)
+    pool.query(sql, (err) => 
       if (err) { console.log("Error Delete", err) }
       res.redirect(`/projects/members/${req.params.projectid}`);
     });
