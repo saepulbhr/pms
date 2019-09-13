@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <% include ../partial/header %>
+    <div class="d-flex" id="wrapper" style="margin-top: 3.9%">
+        <!-- Sidebar -->
+        <% include ../partial/sidebar %>
+        <div class="container-fluid">
+            <div class="container-fluid">
+                <h3 style="margin-top: 1%">Activity</h3>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 col-md-8"> From <%= moment(sevenDaysBefore).format('DD/MM/YYYY') %>
+                                    to <%= moment(today).format('DD/MM/YYYY') %>
+                                    <% for (var key in data) { %>
+                                    <ul> <strong><%= data[key].date == moment(today).format('YYYY-MM-DD') ? 'Today' : key %></strong>
+                                        <% data[key].data.forEach((item)=>{ %>
+                                        <li><%= `${moment(item.time).format('HH:mm')} ${item.title} : ${item.description}, Author : ${item.author} ` %>
+                                        </li>
+                                        <%})%>
+                                    </ul>
+                                    <%}%>
+                                        </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

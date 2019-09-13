@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <% include ../partial/header %>
+    <div class="d-flex" id="wrapper" style="margin-top:3.9%">
+        <% include ../partial/sidebar %>
+        <div class="container-fluid">
+            <div class="mt-3">
+                <h2>Issues</h2>
+                <hr>
+            </div>
+            <div class="container-fluid">
+                <h2>Filter</h2>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="container">
+                            <form action="/projects/issues/<%= projectid %>" method="get">
+                                <input type="hidden" name="page" value="1" />
+                                <div class="form-row">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="cid" name="cid"
+                                            <%= query.cid ? ' checked': ''%>>
+                                        <label class="custom-control-label" for="cid">ID</label>
+                                    </div>
+                                    <div class="form-group col-md-6" style="margin-left:15%;">
+                                        <input type="text" class="form-control" placeholder="ID" id="issueid"
+                                            name="issueid" value="<%= query.issueid %>">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="csubject"
+                                            name="csubject" <%= query.csubject ? ' checked': ''%>>
+                                        <label class="custom-control-label" for="csubject">Subject</label>
+                                    </div>
+                                    <div class="form-group col-md-6" style="margin-left:11.5%;">
+                                        <input type="text" class="form-control" placeholder="Name" id="subject"
+                                            name="subject" value="<%= query.subject%>">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="ctracker"
+                                            name="ctracker"<%= query.ctracker ? ' checked': ''%>>
+                                        <label class="custom-control-label" for="ctracker">Tracker</label>
+                                    </div>
+                                    <div class="form-group col-md-6" style="margin-left:11.5%;">
+                                        <select class="custom-select my-1 mr-sm-2" id="tracker" name="tracker">
+                                            <option>Choose the Tracker</option>
+                                            <option value="Bug" <%= query.tracker == "Bug" ? ' selected': ''%>>Bug</option>
+                                            <option value="Feature"<%= query.tracker == "Feature" ? ' selected': ''%>>Feature</option>
+                                            <option value="Support"<%= query.tracker == "Support" ? ' selected': ''%>>Support</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Search</button>
+                                <a href="/projects/issues/<%= projectid %>"><button type="button"
+                                        class="btn btn-danger">Reset</button></a>
+                            </form>
+                        </div>
+                        <div class="container-fluid mt-4">
+                            <h2>Options</h2>
+                            <div class="row">
+                                <div class="col-sm-11 ml-5">
+                                    <div>
+                                        <form action="/projects/optionissues/<%= projectid %>" method="POST">
+                                            <table width="100%">
+                                                <tr>
+                                                    <td width="23%">Column</td>
+                                                    <td width="12%">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" id="oid"
+                                                                name="oid" value="true"
+                                                                <%= option.oid == "true" ? ' checked': ''%>>
+                                                            <label class="custom-control-label" for="oid">ID</label>
+                                                        </div>
+                                                    </td>
+                                                    <td width="14%">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="odescription" name="odescription" value="true"
+                                                                <%= option.odescription == "true" ? ' checked': ''%>>
+                                                            <label class="custom-control-label"
+                                                                for="odescription">Description</label>
+                                                        </div>
+                                                    </td>
+                                                    <td width="18%">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="oassignee" name="oassignee" value="true"
+                                                                <%= option.oassignee == "true" ? ' checked': ''%>>
+                                                            <label class="custom-control-label"
+                                                                for="oassignee">Assignee</label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="oestimated" name="oestimated" value="true"
+                                                                <%= option.oestimated == "true" ? ' checked': ''%>>
+                                                            <label class="custom-control-label"
+                                                                for="oestimated">Estimated
+                                                                Time</label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="23%"></td>
+                                                    <td>
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="osubject" name="osubject" value="true"
+                                                                <%= option.osubject == "true" ? ' checked': ''%>>
+                                                            <label class="custom-control-label"
+                                                                for="osubject">Subject</label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="ostatus" name="ostatus" value="true"
+                                                                <%= option.ostatus == "true" ? ' checked': ''%>>
+                                                            <label class="custom-control-label"
+                                                                for="ostatus">Status</label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="ostartdate" name="ostartdate" value="true"
+                                                                <%= option.ostartdate == "true" ? ' checked': ''%>>
+                                                            <label class="custom-control-label" for="ostartdate">Start
+                                                                Date</label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="odone" name="odone" value="true"
+                                                                <%= option.odone == "true" ? ' checked': '' %>>
+                                                            <label class="custom-control-label" for="odone">Done</label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="23%"></td>
+                                                    <td>
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="otracker" name="otracker" value="true"
+                                                                <%= option.otracker == "true" ? ' checked': ''%>>
+                                                            <label class="custom-control-label"
+                                                                for="otracker">Tracker</label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="opriority" name="opriority" value="true"
+                                                                <%= option.opriority == "true" ? ' checked': ''%>>
+                                                            <label class="custom-control-label"
+                                                                for="opriority">Priority</label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="oduedate" name="oduedate" value="true"
+                                                                <%= option.oduedate == "true" ? ' checked': ''%>>
+                                                            <label class="custom-control-label" for="oduedate">Due
+                                                                Date</label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="oauthor" name="oauthor" value="true"
+                                                                <%= option.oauthor == "true" ? ' checked': ''%>>
+                                                            <label class="custom-control-label"
+                                                                for="oauthor">Author</label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width=""><a href="#"><button type="submit"
+                                                                class="btn btn-primary">Apply</button></a></td>
+                                                    <td></td>
+                                                </tr>
+                                            </table>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-sm-11 ml-5">
+                                    <table class="table table-striped" style="margin-top:2%">
+                                        <thead>
+                                            <tr>
+                                                <% if(option.oid == "true"){%><th scope="col">#</th><% } %>
+                                                <% if(option.osubject == "true"){%><th scope="col">Subject</th><% } %>
+                                                <% if(option.otracker == "true"){%><th scope="col">Tracker</th><% } %>
+                                                <% if(option.description == "true"){%><th scope="col">Description</th>
+                                                <% } %>
+                                                <% if(option.ostatus == "true"){%><th scope="col">Status</th><% } %>
+                                                <% if(option.opriority == "true"){%><th scope="col">Priority</th><% } %>
+                                                <% if(option.oassignee == "true"){%><th scope="col">Assignee</th><% } %>
+                                                <% if(option.oassignee == "true"){%><th scope="col">Start Date</th>
+                                                <% } %>
+                                                <% if(option.oduedate == "true"){%><th scope="col">Due Date</th><% } %>
+                                                <% if(option.oestimated == "true"){%><th scope="col">Estimated Time</th>
+                                                <% } %>
+                                                <% if(option.odone == "true"){%><th scope="col">Done</th><% } %>
+                                                <% if(option.oauthor == "true"){%><th scope="col">Author</th><% } %>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% data.forEach((data) => { %>
+                                            <tr>
+                                                <% if(option.oid == "true"){%><th><%= data.issueid%></th><% } %>
+                                                <% if(option.osubject == "true"){%><td><%= data.subject%></td><% } %>
+                                                <% if(option.otracker == "true"){%><td><%= data.tracker%></td><% } %>
+                                                <% if(option.description == "true"){%><td><%= data.description%></td>
+                                                <% } %>
+                                                <% if(option.ostatus == "true"){%><td><%= data.status%></td><% } %>
+                                                <% if(option.opriority == "true"){%><td><%= data.priority%></td><% } %>
+                                                <% if(option.oassignee == "true"){%><td><%= data.assignee %></td><% } %>
+                                                <% if(option.ostartdate == "true"){%><td><%= moment(data.startdate).format('DD-MM-YYYY') %></td>
+                                                <% } %>
+                                                <% if(option.oduedate == "true"){%><td><%= moment(data.duedate).format('DD-MM-YYYY') %></td><% } %>
+                                                <% if(option.oestimated == "true"){%><td><%= data.estimatedtime %></td>
+                                                <% } %>
+                                                <% if(option.odone == "true"){%><td><%= data.done%></td><% } %>
+                                                <% if(option.oauthor == "true"){%><td><%= data. author%></td><% } %>
+                                                <td>
+                                                    <a href="/projects/issues/editissue/<%= projectid %>/<%= data.issueid %>">
+                                                        <button type="submit" class="btn btn-success">Edit</button>
+                                                    </a>
+                                                    <a href="/projects/issues/deleteissue/<%= projectid %>/<%= data.issueid %>">
+                                                        <button type="submit"
+                                                            onclick="javascript: return confirm('Anda yakin akan menghapus ?')"
+                                                            class="btn btn-danger">Delete</button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <% })%>
+                                        </tbody>
+                                    </table>
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination">
+                                            <li class="page-item <%= pages == 1 ? 'disabled': '' %>"><a class="page-link" href="/projects<%= url.replace(`page=${parseInt(current)}`, `page=${parseInt(current) - 1}`)%>">Previous</a></li>
+                                            <% for(let i = 1; i <= current; i++) {%>
+                                            <li class="page-item <%= pages == i ? 'active': '' %>"><a class="page-link" href="/projects<%= url.replace(`page=${parseInt(pages)}`, `page=${i}`) %>"><%= i %></a></li>
+                                            <% } %>
+                                            <li class="page-item <%= current == pages ? 'disabled': '' %>"><a class="page-link" href="/projects<%= url.replace(`page=${parseInt(pages)}`, `page=${parseInt(pages) + 1}`)%>">Next</a></li>
+                                        </ul>
+                                    </nav>
+                                    <a href="/projects/addIssues/<%= projectid %>">
+                                        <button type="submit" class="btn btn-primary">Add</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

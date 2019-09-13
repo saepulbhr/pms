@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title></title>
+    <style>
+        .gallery {
+            display: inline-block;
+            margin-top: 20px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- MENU -->
+    <% include ../partial/header %>
+    <div class="d-flex" id="wrapper" style="margin-top:3.9%">
+        <% include ../partial/sidebar %>
+        <div class="container-fluid">
+            <div class="mt-3">
+                <h2>Edit Issues</h2>
+                <hr>
+            </div>
+            <div class="container-fluid">
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="card-body">
+                            <form action="/projects/updateissue/<%= projectid %>/<%= data[0].issueid %>"
+                                enctype="multipart/form-data" method="POST">
+                                <fieldset class="form-group">
+                                    <div class="row">
+                                        <legend class="col-form-label col-sm-2 pt-0">Tracker</legend>
+                                        <div class="col-sm-10">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="bug" name="tracker" value="Bug"
+                                                    class="custom-control-input"
+                                                    <%= data[0].tracker == "Bug" ? ' checked': '' %>>
+                                                <label class="custom-control-label" for="bug">Bug</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="feature" name="tracker" value="Feature"
+                                                    class="custom-control-input"
+                                                    <%= data[0].tracker == "Feature" ? ' checked': '' %>>
+                                                <label class="custom-control-label" for="feature">Feature</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="support" name="tracker" value="Support"
+                                                    class="custom-control-input"
+                                                    <%= data[0].tracker == "Support" ? ' checked': '' %>>
+                                                <label class="custom-control-label" for="support">Support</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <div class="form-group row">
+                                    <label for="subject" class="col-sm-2 col-form-label">Subject</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="subject" name="subject"
+                                            placeholder="Subject" value="<%= data[0].subject %>">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Description</label>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"
+                                            name="description"
+                                            placeholder="Description"><%= data[0].description %></textarea>
+                                    </div>
+                                </div>
+                                <fieldset class="form-group">
+                                    <div class="row">
+                                        <legend class="col-form-label col-sm-2 pt-0">Status</legend>
+                                        <div class="col-sm-10">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="New" name="status" class="custom-control-input"
+                                                    value="New" <%= data[0].status == "New" ? ' checked': '' %>>
+                                                <label class="custom-control-label" for="New">New</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="Progress" name="status" value="In Proggress"
+                                                    class="custom-control-input"
+                                                    <%= data[0].status == "In Proggress" ? ' checked': '' %>>
+                                                <label class="custom-control-label" for="Progress">In
+                                                    Progress</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="Resolved" name="status" value="Resolved"
+                                                    class="custom-control-input"
+                                                    <%= data[0].status == "Resolved" ? ' checked': '' %>>
+                                                <label class="custom-control-label" for="Resolved">Resolved</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="Feedback" name="status" value="Feedback"
+                                                    class="custom-control-input"
+                                                    <%= data[0].status == "Feedback" ? ' checked': '' %>>
+                                                <label class="custom-control-label" for="Feedback">Feedback</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="Closed" name="status" value="Closed"
+                                                    class="custom-control-input"
+                                                    <%= data[0].status == "Closed" ? ' checked': '' %>>
+                                                <label class="custom-control-label" for="Closed">Closed</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="Rejected" name="status" value="Rejected"
+                                                    class="custom-control-input"
+                                                    <%= data[0].status == "Rejected" ? ' checked': '' %>>
+                                                <label class="custom-control-label" for="Rejected">Rejected</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <div class="row">
+                                        <legend class="col-form-label col-sm-2 pt-0">Priority</legend>
+                                        <div class="col-sm-10">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="Normal" name="priority" value="Normal"
+                                                    class="custom-control-input"
+                                                    <%= data[0].priority == "Normal" ? ' checked': '' %>>
+                                                <label class="custom-control-label" for="Normal">Normal</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="High" name="priority" value="High"
+                                                    class="custom-control-input"
+                                                    <%= data[0].priority == "High" ? ' checked': '' %>>
+                                                <label class="custom-control-label" for="High">High</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="Urgent" name="priority" value="Urgent"
+                                                    class="custom-control-input"
+                                                    <%= data[0].priority == "Urgent" ? ' checked': '' %>>
+                                                <label class="custom-control-label" for="Urgent">Urgent</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="Immediate" name="priority" value="Immediate"
+                                                    class="custom-control-input"
+                                                    <%= data[0].priority == "Immediate" ? ' checked': '' %>>
+                                                <label class="custom-control-label" for="Immediate">Immediate</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-2 col-form-label">Assignee</label>
+                                    <div class="col-sm-10">
+                                        <select name="assignee" class="form-control">
+                                            <option>Choice</option>
+                                            <% datauser.forEach((datause) => {%>
+                                            <option value="<%= datause.userid%>"
+                                                <% if(data[0].assignee == datause.userid){%><%= datause.firstname ? 'selected': '' %>
+                                                <% } %>>
+                                                <%= datause.firstname + ' ' + datause.lastname %>
+                                            </option>
+                                            <% }) %>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-2 col-form-label">Start Date</label>
+                                    <div class="col-sm-10">
+                                        <input type="date" class="form-control" id="" name="startdate"
+                                            placeholder="Start Date"
+                                            value="<%= moment(data[0].startdate).format('YYYY-MM-DD') %>">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-2 col-form-label">Due Date</label>
+                                    <div class="col-sm-10">
+                                        <input type="date" class="form-control" id="" name="duedate"
+                                            placeholder="Due Date"
+                                            value="<%= moment(data[0].duedate).format('YYYY-MM-DD') %>">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-2 col-form-label">Estimated Time</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="" name="estimatedtime"
+                                            placeholder="Due Date" value="<%= data[0].estimatedtime %>">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-2 col-form-la
+                                    bel">% done</label>
+                                    <div class="col-sm-10">
+                                        <select name="progres" class="form-control">
+                                            <option value="0" <%= data[0].done == '0' ? ' selected': ''%>>0%</option>
+                                            <option value="25" <%= data[0].done == '25' ? ' selected': ''%>>25%</option>
+                                            <option value="50" <%= data[0].done == '50' ? ' selected': ''%>>50%</option>
+                                            <option value="75" <%= data[0].done == '75' ? ' selected': ''%>>75%</option>
+                                            <option value="100" <%= data[0].done == '100' ? ' selected': ''%>>100%
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-2 col-form-label">Files</label>
+                                    <div class="col-sm-10">
+                                        <input type="file" name="fild" class="form-control" <%= data[0].file %>>
+                                    </div>
+
+                                    <div class='col-sm-4 col-xs-6 col-md-3 col-lg-3 mt-1'>
+                                        <a class="thumbnail fancybox" rel="ligthbox"
+                                            href="/images/<%= `${data[0].file}?${Date.now()}` %>">
+                                            <img class="img-responsive"
+                                                src="/images/<%= `${data[0].file}?${Date.now()}` %>" alt="" width="100"
+                                                style="margin-left: 75%" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-2 col-form-label">Spent Time</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="spenttime" class="form-control" id=""
+                                            placeholder="Spent Time" value="<%= data[0].estimatedtime%>">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-2 col-form-label">Target Version</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="tergetversion" class="form-control" id=""
+                                            value="<%= data[0].targetversion%>" placeholder="Target Version">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-2 col-form-label">Parent Task</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" name="parenttask" class="form-control" id=""
+                                            placeholder="Parent Task" value="<%= data[0].parenttask %>" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-10">
+                                        <button type="submit" class="btn btn-primary">Update</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".fancybox").fancybox();
+    });
+    
+</script>
+
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title><%= title %></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <!-- MENU -->
+    <% include ../partial/header %>
+
+    <div class="d-flex" id="wrapper" style="margin-top: 3.9%">
+        <!-- Sidebar -->
+        <% include ../partial/sidebar %>
+
+
+        <!-- Page Content -->
+        <!-- <div id="page-content-wrapper" style="background-color: cornsilk"> -->
+        <div class="container-fluid">
+            <div class="container-fluid">
+                <h2 style="margin-top: 1%">Overview</h2>
+                <hr class="mt-1">
+            </div>
+            <div class="container-fluid">
+                <h3 style="margin-top: 1%">Library System</h3>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 col-md-8"> Issues Tracker
+                                    <ul>
+                                        <li>Bug : <%= bug %> Open / <%= statbug %> </li>
+                                        <li>Feature : <%= feature %> Open / <%= statfeat %> </li>
+                                        <li>Support : <%= support %> Open / <%= statsuport %> </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-5">
+                    <div class="card-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 col-md-8"> Members
+                                    <ul>
+                                        <% for(let i = 0; i < datause.length; i++){ %>
+                                        <li><%= datause[i].firstname + ' ' + datause[i].lastname %></li>
+                                        <% } %>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- </div> -->
+</body>
+
+</html>

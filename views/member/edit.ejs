@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <% include ../partial/header %>
+    <div class="d-flex" id="wrapper" style="margin-top: 3.9%">
+        <!-- Sidebar Menu     -->
+        <% include ../partial/sidebar %>
+        <div class="container-fluid">
+            <div class="container-fluid">
+                <div class="mt-2">
+                    <h2>Edit Member</h2>
+                    <hr>
+                </div>
+                <div class="container-fluid">
+                    <form action="/projects/updatemember/<%= projectid %>/<%= data.id %>" method="POST">
+                        <div class="form-group row">
+                            <label for="inputPassword" class="col-sm-1 col-form-label ml-3">Name</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" id="inputPassword" placeholder="Name"
+                                    name="name" value="<%= data.firstname +' '+ data.lastname %>" readonly>
+                            </div>
+                        </div>
+                        <fieldset class="form-group">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <legend class="col-form-label col-sm-2 pt-0">Position</legend>
+                                </div>
+                                <div class="col-sm-10 ml-5">
+                                    <div class="form-check">
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" name="position" id="manager"
+                                                class="custom-control-input" value="Manager" <%= data.role == "Manager" ? ' checked': '' %>>
+                                            <label class="custom-control-label" for="manager">Manager</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-10 ml-5">
+                                    <div class="form-check">
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" name="position" id="programmer"
+                                                class="custom-control-input" value="Programmer" <%= data.role == "Programmer" ? ' checked': '' %>>
+                                            <label class="custom-control-label" for="programmer">Programmer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-10 ml-5">
+                                    <div class="form-check">
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" name="position" id="qualityassurance"
+                                                class="custom-control-input" value="Quality
+                                                Assurance" <% data.role == "Quality Assurance" ? ' checked': '' %>>
+                                            <label class="custom-control-label" for="qualityassurance">Quality
+                                                Assurance</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="form-group row">
+                            <div class="col-sm-10">
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

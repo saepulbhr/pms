@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+
+<body>
+
+    <!-- Menu -->
+    <% include ../partial/header %>
+
+    <div class="d-flex" id="wrapper" style="margin-top: 3.9%">
+        <!-- Sidebar Menu     -->
+        <% include ../partial/sidebar %>
+        <div class="container-fluid">
+            <div class="container-fluid">
+                <div class="mt-2">
+                    <h2>Member</h2>
+                    <hr>
+                </div>
+                <div class="container-fluid">
+                    <h2>Filter</h2>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="container">
+                                <form action="/projects/members/<%=projectid%>" method="get">
+                                    <div class="form-row">
+                                        <input type="hidden" name="page" value="1">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="cid" name="cid" <%= query.cid ? ' checked': ''%>>
+                                            <label class="custom-control-label" for="cid">Id</label>
+                                        </div>
+                                        <div class="form-group col-md-6" style="margin-left:12%;">
+                                            <input type="text" class="form-control" placeholder="ID" id="memberid"
+                                                name="memberid" value="<%= query.memberid %>">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="cname" name="cname" <%= query.cname ? 'checked':'' %>>
+                                            <label class="custom-control-label" for="cname">Name</label>
+                                        </div>
+                                        <div class="form-group col-md-6" style="margin-left:9.5%;">
+                                            <input type="text" class="form-control" placeholder="Name" id="name" value="<%= query.name %>"
+                                                name="name">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="cposition"
+                                                name="cposition" <%= query.cposition ? ' checked': '' %>>
+                                            <label class="custom-control-label" for="cposition">Position</label>
+                                        </div>
+                                        <div class="form-group col-md-6" style="margin-left:8%;">
+                                            <select class="custom-select my-1 mr-sm-2" id="membername" name="membername">
+                                                <option>Choose the Members</option>
+                                                <option value="Manager" <%= query.membername ? ' selected' : '' %>>Manager</option>
+                                                <option value="Programmer" <%= query.membername ? ' selected': '' %>>Programmer</option>
+                                                <option value="QualityAssurance" <%= query.membername ? ' selected': '' %>>Quality Assurance</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Search</button>
+                                    <a href="/projects/members/<%= projectid %> "><button type="button"
+                                            class="btn btn-danger">Reset</button></a>
+                                </form>
+                            </div>
+                            <div class="container-fluid mt-4">
+                                <h2>Options</h2>
+                                <div class="row">
+                                    <div class="col-sm-11 ml-5">
+                                        <div>
+                                            <form action="/projects/optionmember/<%= projectid %>" method="POST">
+                                                <table width="100%">
+                                                    <tr>
+                                                        <td width="23%">Column</td>
+                                                        <td>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                    id="oid" name="oid" value="true"
+                                                                    <%= option.oid == "true" ? ' checked': ''%>>
+                                                                <label class="custom-control-label" for="oid">ID</label>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="23%"></td>
+                                                        <td>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                    name="oname" id="oname" value="true"
+                                                                    <%= option.oname == "true" ? ' checked': '' %>>
+                                                                <label class="custom-control-label"
+                                                                    for="oname">Name</label>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="23%"></td>
+                                                        <td>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                    name="orole" value="true" id="orole"
+                                                                    <%= option.orole == "true" ? ' checked': '' %>>
+                                                                <label class="custom-control-label"
+                                                                    for="orole">Position</label>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width=""><a href="#"><button type="submit"
+                                                                    class="btn btn-primary">Apply</button></a></td>
+                                                        <td></td>
+                                                    </tr>
+                                                </table>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-sm-11 ml-5">
+                                        <table class="table table-striped" style="margin-top:2%">
+                                            <thead>
+                                                <tr>
+                                                    <% if(option.oid == "true"){ %><th scope="col">#</th> <% } %>
+                                                    <% if(option.oname == "true"){ %><th scope="col">Name</th><% } %>
+                                                    <% if(option.orole == "true"){ %><th scope="col">Position</th>
+                                                    <% } %>
+                                                    <th scope="col">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% for(let i = 0; i < data.length; i++) { %>
+                                                <tr>
+                                                    <% if(option.oid == "true"){ %><th><%= data[i].id %></th><% } %>
+                                                    <% if(option.oname == "true"){ %><td><%= data[i].fullname %></td><% } %>
+                                                    <% if(option.orole == "true"){ %><td><%= data[i].role %></td><% } %>
+                                                    <td>
+                                                        <a href="/projects/editmember/<%= projectid %>/<%= data[i].id %>">
+                                                            <button type="submit" class="btn btn-success">Edit</button>
+                                                        </a>
+                                                        <a href="/projects/deletemember/<%= projectid %>/<%= data[i].id %>">
+                                                            <button type="submit"
+                                                                onclick="javascript: return confirm('Anda yakin akan menghapus ?')"
+                                                                class="btn btn-danger">Delete</button>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <% } %>
+                                            </tbody>
+                                        </table>
+                                        <nav aria-label="Page navigation example">
+                                            <ul class="pagination">
+                                                <li class="page-item <%= current == 1 ? 'disabled': '' %>"><a
+                                                        class="page-link "
+                                                        href="/projects<%= url.replace(`page=${parseInt(current)}`, `page=${parseInt(current) - 1}`)%>">Previous</a></li>
+                                                <% for(let i = 1; i <= pages; i++){ %>
+                                                <li class="page-item"><a class="page-link <%= current == i ? 'active': '' %>"
+                                                        href="/projects<%= url.replace(`page=${parseInt(current)}`, `page=${i}`) %>"><%= i %></a>
+                                                </li>
+                                                <% } %>
+                                                <li class="page-item <%= current == pages ? 'disabled': '' %>"><a class="page-link" href="/projects<%= url.replace(`page=${parseInt(current)}`, `page=${parseInt(current) + 1}`)%>">Next</a></li>
+                                            </ul>
+                                        </nav>
+                                        <a href="/projects/addMember/<%= projectid %>">
+                                            <button type="submit" class="btn btn-primary">Add</button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+</body>
+
+</html>

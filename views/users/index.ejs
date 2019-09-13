@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <% include ../partial/header %>
+    <main role="main">
+        <div class="container-fluid mt-5">
+            <h2 style="margin-top: 5%; margin-left: 10%">Users</h2>
+            <hr>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="container">
+                    <form action="/users" method="get">
+                        <input type="hidden" name="page" value="1" />
+                        <div class="form-row">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="cuserid" name="cuserid"
+                                    <%= query.userid ? ' checked': '' %>>
+                                <label class="custom-control-label" for="cuserid">ID</label>
+                            </div>
+                            <div class="form-group col-md-6" style="margin-left:12%;">
+                                <input type="text" class="form-control" placeholder="ID" name="userid"
+                                    value="<%= query.userid %>">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="cemail" name="cemail"
+                                    <%= query.email ? ' checked': '' %>>
+                                <label class="custom-control-label" for="cemail">Email</label>
+                            </div>
+                            <div class="form-group col-md-6" style="margin-left:9.5%;">
+                                <input type="text" class="form-control" placeholder="Email" id="email" name="email"
+                                    value="<%= query.email %>">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="cname" name="cname" value="<%= query.name %>">
+                                <label class="custom-control-label" for="cname">Name</label>
+                            </div>
+                            <div class="form-group col-md-6" style="margin-left:9.5%;">
+                                <input type="text" class="form-control" placeholder="Name" id="name" name="name">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="ctype" name="ctype" <%= query.ctype ? ' c':''%>>
+                                <label class="custom-control-label" for="ctype">Type</label>
+                            </div>
+                            <div class="form-group col-md-6" style="margin-left:10.2%;">
+                                <select class="custom-select my-1 mr-sm-2" id="type" name="type">
+                                    <option>Choose The Type</option>
+                                    <option value="true" <%= query.type == "true" ? ' selected': ''%>>Fulltime</option>
+                                    <option value="false" <%= query.type == "false" ? ' selected': '' %>>Parttime</option>
+                                </select> </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="croles" name="croles" <%= query.roles ? 'checked':'' %>>
+                                <label class="custom-control-label" for="croles">Role</label>
+                            </div>
+                            <div class="form-group col-md-6" style="margin-left:10.4%;">
+                                <select class="custom-select my-1 mr-sm-2" id="roles" name="roles" >
+                                    <option>Choose The Role</option>
+                                    <% data.forEach((data) => {%>
+                                    <option value="<%= data.roles%>" <%= query.roles ? 'selected': ''%>><%= data.roles%></option>
+                                    <% }) %>
+                                </select> </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Search</button>
+                        <a href="/users"><button type="button" class="btn btn-danger">Reset</button></a>
+                    </form>
+                </div>
+                <div class="container-fluid mt-3">
+                    <h2 style="margin-left: 10%">Options</h2>
+                    <div class="row">
+                        <div class="col-sm-11 ml-5">
+                            <div>
+                                <form action="/users/option" method="POST">
+                                    <table width="100%">
+                                        <tr style="margin-left: 10%">
+                                            <td width="23%">Column</td>
+                                            <td>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" value="true"
+                                                        name="idoption" id="idoption"
+                                                        <%= option.idoption == "true" ? ' checked': '' %>>
+                                                    <label class="custom-control-label" for="idoption">ID</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="23%"></td>
+                                            <td>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="emailoption"
+                                                        name="emailoption" value="true"
+                                                        <%= option.emailoption == "true" ? ' checked': '' %>>
+                                                    <label class="custom-control-label" for="emailoption">Email</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="23%"></td>
+                                            <td>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" value="true"
+                                                        name="nameoption" id="nameoption"
+                                                        <%= option.nameoption == "true" ? ' checked': '' %>>
+                                                    <label class="custom-control-label" for="nameoption">Name</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="23%"></td>
+                                            <td>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" value="true"
+                                                        name="typeoption" id="typeoption"
+                                                        <%= option.typeoption == "true" ? ' checked': '' %>>
+                                                    <label class="custom-control-label" for="typeoption">Type</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="23%"></td>
+                                            <td>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" value="true"
+                                                        name="roleoption" id="roleoption"
+                                                        <%= option.roleoption == "true" ? ' checked': '' %>>
+                                                    <label class="custom-control-label" for="roleoption">Role</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width=""><button type="submit" class="btn btn-primary">Apply</button>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid mt-3">
+                <div class="row">
+                    <div class="col-sm-11 ml-5">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <% if(option.idoption == "true"){%><th scope="col">#</th><% } %>
+                                    <% if(option.emailoption == "true"){%><th scope="col">Email</th><% } %>
+                                    <% if(option.nameoption == "true"){%><th scope="col">Name</th><% } %>
+                                    <% if(option.typeoption == "true"){%><th scope="col">Type</th><% } %>
+                                    <% if(option.roleoption == "true"){%><th scope="col">Role</th><% } %>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% data.forEach((data) => {%>
+                                <tr>
+                                    <% if(option.idoption == "true"){%><th><%= data.userid%></th><% } %>
+                                    <% if(option.emailoption == "true"){%><td><%= data.email%></td><% } %>
+                                    <% if(option.nameoption == "true"){%><td><%= data.firstname %> <%= data.lastname %></td><% } %>
+                                    <% if(option.typeoption == "true"){%><td><% if(data.typejob == true) {%>Fulltime <%} else {%> Parttime <% } %></td><% } %>
+                                    <% if(option.roleoption == "true"){%><td><%= data.roles %></td><% } %>
+                                    <td>
+                                        <a href="/users/edit/<%= data.userid %>">
+                                            <button type="submit" class="btn btn-success">Edit</button>
+                                        </a>
+                                        <a href="/users/delete/<%= data.userid %>">
+                                            <button type="submit"
+                                                onclick="javascript: return confirm('Anda yakin akan menghapus ?')"
+                                                class="btn btn-danger">Delete</button>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                        <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <li class="page-item <%= current == 1 ? 'disabled': '' %>"><a class="page-link"
+                                            href="/users<%= url.replace(`page=${parseInt(current)}`, `page=${parseInt(current) - 1}`)%>">Previous</a>
+                                    </li>
+                                    <% for(let i = 1; i <= pages; i++){ %>
+                                    <li class="page-item <%= current == i ? 'active': '' %>"><a class="page-link"
+                                            href="/users<%= url.replace(`page=${parseInt(current)}`, `page=${i}`) %>"><%= i %></a>
+                                    </li>
+                                    <% } %>
+                                    <li class="page-item <%= current == pages ? 'disabled': '' %>"><a
+                                            class="page-link"
+                                            href="/users<%= url.replace(`page=${parseInt(current)}`, `page=${parseInt(current) + 1}`)%>">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <a href="/users/add">
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </main>
+
+</body>
+
+</html>

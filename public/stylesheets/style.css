@@ -1,0 +1,28 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.mt-6{
+ margin-top: 6%; 
+}
+
+.mt-7{
+  margin-top: 7%;
+}
+
+.mt-8{
+  margin-top: 8%;
+}
+
+.mt-9{
+  margin-top: 9%;
+}
+
+.mt-10{
+  margin-top: 10%;
+}
