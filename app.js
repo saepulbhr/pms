@@ -12,14 +12,7 @@ var flash = require('connect-flash');
 const fileUpload = require('express-fileupload');
 
 //models engine setup
-// const { Pool, Client } = require('pg')
-// const pool = new Pool({
-//   user: 'postgres',
-//   host: 'localhost',
-//   database: 'pms',
-//   password: 'janibahri31',
-//   port: 5432,
-// })
+
 
 const { Pool, Client } = require('pg')
 const pool = new Pool({

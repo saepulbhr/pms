@@ -372,6 +372,8 @@ module.exports = (pool) => {
     }
 
     pool.query(sql, (err) => {
+    console.log(sql);
+    
       if (err) { console.log('fatal Error') }
       pool.query(`SELECT users.firstname, users.lastname FROM users WHERE userid = ${req.session.user.userid}`, (err, row) => {
         let date = new Date();
